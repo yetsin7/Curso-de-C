@@ -4,7 +4,7 @@
 
 ## Documentacion de referencia
 
-Consulta [DOCUMENTACION-OFICIAL.md](./DOCUMENTACION-OFICIAL.md) para estudiar
+Consulta [Documentación-C.md](./Documentación-C.md) para estudiar
 con enlaces tecnicos recomendados durante el curso.
 
 ## Hola, Nicaragua
