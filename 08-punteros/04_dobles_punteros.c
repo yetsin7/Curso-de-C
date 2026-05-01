@@ -1,100 +1,148 @@
 /*
- * Modulo 08 -- Dobles punteros
- * Compilar: gcc -Wall -Wextra -std=c11 -o 04_dobles 04_dobles_punteros.c
+ * ============================================================
+ * Modulo 08 -- Punteros
+ * Archivo: 04_dobles_punteros.c
+ * ============================================================
  *
- * Demuestra:
- *   - Concepto de puntero a puntero
- *   - Preparacion para arreglos 2D dinamicos
- *   - Modificacion de direcciones de punteros
+ * Este archivo explica los dobles punteros.
+ *
+ * Un doble puntero es un puntero que guarda la direccion de otro puntero.
+ *
+ * Ejemplo:
+ *
+ *   int valor = 42;
+ *   int *ptr = &valor;
+ *   int **doble = &ptr;
+ *
+ * Significado:
+ *
+ *   valor  guarda un numero.
+ *   ptr    guarda la direccion de valor.
+ *   doble  guarda la direccion de ptr.
+ *
+ * Los dobles punteros se usan para modificar punteros desde funciones,
+ * trabajar con arreglos dinamicos de dos dimensiones y manejar estructuras
+ * mas avanzadas.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o 04_dobles 04_dobles_punteros.c
+ *
+ * Ejecutar:
+ *   Windows: 04_dobles.exe
+ *   Linux/macOS: ./04_dobles
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Modifica la direccion a la que apunta un puntero */
+/*
+ * Esta funcion cambia la direccion a la que apunta un puntero.
+ *
+ * Para poder modificar el puntero original, necesitamos recibir la
+ * direccion de ese puntero. Por eso usamos int **.
+ */
 void reasignarPuntero(int **ptr, int *nuevaDireccion) {
-    *ptr = nuevaDireccion;  /* Cambia la direccion almacenada en ptr */
+    *ptr = nuevaDireccion;
 }
 
 int main(void) {
-    /* -----------------------------------------------
-     * 1. Concepto de puntero a puntero
-     * ----------------------------------------------- */
     printf("=== PUNTERO A PUNTERO ===\n");
 
     int valor = 42;
-    int *ptr = &valor;     /* Un nivel de indireccion */
-    int **doble = &ptr;    /* Dos niveles de indireccion */
+    int *ptr = &valor;
+    int **doble = &ptr;
 
-    printf("valor     = %d\n", valor);
-    printf("ptr       = %p  (direccion de valor)\n", (void *)ptr);
-    printf("*ptr      = %d  (valor de la variable)\n", *ptr);
-    printf("doble     = %p  (direccion de ptr)\n", (void *)doble);
-    printf("*doble    = %p  (mismo que ptr)\n", (void *)*doble);
-    printf("**doble   = %d  (mismo que valor)\n", **doble);
+    printf("valor   = %d\n", valor);
+    printf("ptr     = %p\n", (void *)ptr);
+    printf("*ptr    = %d\n", *ptr);
+    printf("doble   = %p\n", (void *)doble);
+    printf("*doble  = %p\n", (void *)*doble);
+    printf("**doble = %d\n", **doble);
 
-    /* Modificar a traves del doble puntero */
+    /*
+     * **doble llega hasta el valor original.
+     */
     **doble = 99;
     printf("Despues de **doble = 99: valor = %d\n", valor);
 
-    /* -----------------------------------------------
-     * 2. Modificacion de direcciones de punteros
-     * ----------------------------------------------- */
     printf("\n=== MODIFICAR DIRECCIONES ===\n");
 
-    int a = 100, b = 200;
+    int a = 100;
+    int b = 200;
     int *selector = &a;
 
     printf("Antes: selector apunta a %d\n", *selector);
+
     reasignarPuntero(&selector, &b);
+
     printf("Despues: selector apunta a %d\n", *selector);
 
-    /* -----------------------------------------------
-     * 3. Preparacion para arreglo 2D dinamico
-     * ----------------------------------------------- */
-    printf("\n=== PREPARACION ARREGLO 2D ===\n");
+    printf("\n=== ARREGLO 2D DINAMICO ===\n");
 
-    int filas = 3, columnas = 4;
+    /*
+     * Esta parte prepara una matriz dinamica.
+     *
+     * matriz es un doble puntero porque apunta a un arreglo de punteros.
+     * Cada puntero representa una fila.
+     */
+    int filas = 3;
+    int columnas = 4;
 
-    /* Allocar arreglo de punteros (una fila de punteros) */
     int **matriz = malloc(filas * sizeof(int *));
+
     if (matriz == NULL) {
-        printf("Error de memoria\n");
+        printf("Error: no se pudo reservar memoria para las filas.\n");
         return 1;
     }
 
-    /* Allocar cada fila */
     for (int i = 0; i < filas; i++) {
         matriz[i] = malloc(columnas * sizeof(int));
+
         if (matriz[i] == NULL) {
-            printf("Error de memoria en fila %d\n", i);
+            printf("Error: no se pudo reservar memoria para la fila %d.\n", i);
+
+            for (int j = 0; j < i; j++) {
+                free(matriz[j]);
+            }
+
+            free(matriz);
             return 1;
         }
     }
 
-    /* Llenar la matriz */
+    /*
+     * Llenar la matriz con valores consecutivos.
+     */
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
             matriz[i][j] = i * columnas + j + 1;
         }
     }
 
-    /* Imprimir la matriz */
     printf("Matriz %dx%d:\n", filas, columnas);
+
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
-            printf("  %2d", matriz[i][j]);
+            printf("%3d", matriz[i][j]);
         }
         printf("\n");
     }
 
-    /* Acceder a un elemento con doble desreferencia */
-    printf("Elemento [1][2] via punteros: %d\n", *(*(matriz + 1) + 2));
+    /*
+     * matriz[1][2] equivale a *(*(matriz + 1) + 2).
+     */
+    printf("Elemento [1][2] usando notacion normal: %d\n", matriz[1][2]);
+    printf("Elemento [1][2] usando punteros:        %d\n", *(*(matriz + 1) + 2));
 
-    /* Liberar memoria en orden inverso */
+    /*
+     * Liberar memoria.
+     *
+     * Primero se libera cada fila y al final el arreglo de punteros.
+     */
     for (int i = 0; i < filas; i++) {
         free(matriz[i]);
     }
+
     free(matriz);
 
     return 0;
