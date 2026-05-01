@@ -1,13 +1,33 @@
 /*
- * Modulo 10 -- Escritura de Archivos
- * Compilar: gcc -Wall -Wextra -std=c11 -o escritura 01_escritura_archivos.c
+ * ============================================================
+ * Modulo 10 -- Manejo de Archivos
+ * Archivo: 01_escritura_archivos.c
+ * ============================================================
  *
- * Demuestra como crear y escribir archivos de texto:
- *   - fopen con modo "w" (escribir, sobrescribe existente)
- *   - fprintf para salida con formato
- *   - fputs para escribir cadenas completas
- *   - fclose para liberar recursos y vaciar buffers
- *   - Verificacion de errores con NULL
+ * Este archivo explica como crear y escribir archivos de texto en C.
+ *
+ * Hasta ahora los programas imprimian informacion en la consola. Pero
+ * muchas veces necesitamos guardar datos para usarlos despues. Para eso
+ * usamos archivos.
+ *
+ * Conceptos importantes:
+ *
+ *   FILE*    representa un archivo abierto.
+ *   fopen    abre un archivo.
+ *   fprintf  escribe texto con formato en un archivo.
+ *   fputs    escribe una cadena de texto en un archivo.
+ *   fclose   cierra el archivo.
+ *
+ * Modo "w":
+ *   Abre el archivo para escritura. Si no existe, lo crea. Si ya existe,
+ *   borra su contenido anterior y lo sobrescribe.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o escritura 01_escritura_archivos.c
+ *
+ * Ejecutar:
+ *   Windows: escritura.exe
+ *   Linux/macOS: ./escritura
  */
 
 #include <stdio.h>
@@ -15,7 +35,12 @@
 
 #define ARCHIVO "notas.txt"
 
-/* Escribe datos con formato usando fprintf */
+/*
+ * Escribe datos con formato usando fprintf.
+ *
+ * fprintf funciona parecido a printf, pero en vez de imprimir en pantalla,
+ * escribe dentro de un archivo.
+ */
 void escribirConFormato(FILE *archivo) {
     fprintf(archivo, "=== Registro de Estudiantes ===\n");
     fprintf(archivo, "Nombre: Ana Garcia\n");
@@ -23,7 +48,12 @@ void escribirConFormato(FILE *archivo) {
     fprintf(archivo, "Materia: Programacion en C\n");
 }
 
-/* Escribe texto plano usando fputs */
+/*
+ * Escribe texto plano usando fputs.
+ *
+ * fputs es util cuando ya tienes una cadena completa y solo quieres
+ * guardarla en el archivo.
+ */
 void escribirTextoPlano(FILE *archivo) {
     fputs("\n--- Segunda seccion ---\n", archivo);
     fputs("Carlos Lopez - Nota: 8.7\n", archivo);
@@ -32,10 +62,15 @@ void escribirTextoPlano(FILE *archivo) {
 }
 
 int main(void) {
-    /* Abrir archivo en modo escritura (crea o sobrescribe) */
+    /*
+     * Abrimos el archivo en modo escritura.
+     */
     FILE *archivo = fopen(ARCHIVO, "w");
 
-    /* Verificar que se abrio correctamente */
+    /*
+     * Siempre debemos verificar si fopen devolvio NULL.
+     * NULL significa que el archivo no pudo abrirse.
+     */
     if (archivo == NULL) {
         perror("Error al abrir el archivo");
         return EXIT_FAILURE;
@@ -43,22 +78,25 @@ int main(void) {
 
     printf("Archivo '%s' abierto para escritura.\n", ARCHIVO);
 
-    /* Escribir con formato (como printf pero al archivo) */
     escribirConFormato(archivo);
     printf("Datos con formato escritos correctamente.\n");
 
-    /* Escribir texto plano con fputs (mas rapido para cadenas simples) */
     escribirTextoPlano(archivo);
     printf("Texto plano escrito correctamente.\n");
 
-    /* CERRAR EL ARCHIVO: fundamental para vaciar buffers y liberar recursos */
+    /*
+     * Cerrar el archivo es obligatorio.
+     *
+     * fclose guarda lo pendiente, libera recursos y termina la relacion
+     * entre el programa y el archivo.
+     */
     if (fclose(archivo) != 0) {
         perror("Error al cerrar el archivo");
         return EXIT_FAILURE;
     }
 
-    printf("Archivo cerrado exitosamente. Datos guardados en disco.\n");
-    printf("\nPara ver el contenido, abre el archivo: %s\n", ARCHIVO);
+    printf("Archivo cerrado exitosamente.\n");
+    printf("Abre el archivo '%s' para ver el contenido guardado.\n", ARCHIVO);
 
     return EXIT_SUCCESS;
 }
