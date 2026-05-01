@@ -2,6 +2,11 @@
 
 > Repositorio oficial: <https://github.com/yetsin7/Curso-de-C>
 
+## Documentacion de referencia
+
+Consulta [DOCUMENTACION-OFICIAL.md](./DOCUMENTACION-OFICIAL.md) para estudiar
+con enlaces tecnicos recomendados durante el curso.
+
 ## Hola, Nicaragua
 
 Este libro fue escrito pensando en ti: estudiante, autodidacta o curioso de Nicaragua que quiere aprender a programar de verdad, sin pagar cursos caros, sin necesitar internet permanente y sin requisitos previos. Si estás en Managua, León, Estelí, Matagalpa, Bluefields, Granada o cualquier rincón del país, este material es para ti.
