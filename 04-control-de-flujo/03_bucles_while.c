@@ -1,21 +1,41 @@
 /*
- * Modulo 04 -- Bucles while y do-while
+ * ============================================================
+ * Modulo 04 -- Control de Flujo
  * Archivo: 03_bucles_while.c
+ * ============================================================
  *
- * Demuestra los bucles while y do-while en C:
- *   - Bucle while
- *   - Bucle do-while
- *   - Sentencias break y continue
- *   - Bucles con condiciones compuestas
+ * Este archivo explica los bucles while y do-while en C.
  *
- * Compilar: gcc -Wall -Wextra -std=c11 -o bucles_while 03_bucles_while.c
+ * Un bucle while repite instrucciones mientras una condicion sea
+ * verdadera.
+ *
+ * Un bucle do-while tambien repite instrucciones, pero garantiza que
+ * el bloque se ejecute al menos una vez.
+ *
+ * Tambien se muestran break y continue:
+ *
+ *   break    termina el bucle inmediatamente.
+ *   continue salta a la siguiente vuelta del bucle.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o bucles_while 03_bucles_while.c
+ *
+ * Ejecutar:
+ *   Windows: bucles_while.exe
+ *   Linux/macOS: ./bucles_while
  */
 
 #include <stdio.h>
 
 int main(void) {
-    /* ===== BUCLE WHILE BASICO ===== */
-    printf("=== Suma de 1 a 100 (while) ===\n");
+    printf("=== BUCLES WHILE Y DO-WHILE ===\n\n");
+
+    /*
+     * while basico.
+     *
+     * Mientras n sea menor o igual a 100, se suma n y luego n aumenta.
+     */
+    printf("Suma de 1 a 100 usando while:\n");
 
     int suma = 0;
     int n = 1;
@@ -27,8 +47,12 @@ int main(void) {
 
     printf("Resultado: %d\n", suma);
 
-    /* ===== POTENCIAS CON WHILE ===== */
-    printf("\n=== Potencias de 2 hasta 1000 ===\n");
+    /*
+     * Potencias de 2.
+     *
+     * Este ejemplo repite hasta que potencia pasa de 1000.
+     */
+    printf("\nPotencias de 2 hasta 1000:\n");
 
     int potencia = 1;
 
@@ -38,24 +62,31 @@ int main(void) {
     }
     printf("\n");
 
-    /* ===== BUCLE DO-WHILE ===== */
-    printf("\n=== Validacion con do-while ===\n");
+    /*
+     * do-while.
+     *
+     * Este tipo de bucle ejecuta el bloque primero y revisa la condicion
+     * al final.
+     */
+    printf("\nValidacion con do-while:\n");
 
-    /* Simulamos validacion: el usuario ingresa un numero del 1 al 10 */
-    int numero = 15;  /* Valor invalido inicial para demostrar el bucle */
+    int numero = 15;
 
     do {
-        printf("Ingresa un numero valido (1-10): ");
-        numero = 5;  /* Simulamos entrada del usuario */
+        printf("Probando numero...\n");
+        numero = 5;
+
         if (numero < 1 || numero > 10) {
-            printf("Numero invalido, intenta de nuevo\n");
+            printf("Numero invalido\n");
         }
     } while (numero < 1 || numero > 10);
 
     printf("Numero valido: %d\n", numero);
 
-    /* ===== DO-WHILE CON CONTADOR ===== */
-    printf("\n=== Iteraciones con do-while ===\n");
+    /*
+     * do-while con contador.
+     */
+    printf("\nIteraciones con do-while:\n");
 
     int contador = 1;
 
@@ -64,8 +95,13 @@ int main(void) {
         contador++;
     } while (contador <= 3);
 
-    /* ===== BREAK EN WHILE ===== */
-    printf("\n=== Busqueda con break ===\n");
+    /*
+     * break.
+     *
+     * Se usa cuando queremos salir del bucle antes de que la condicion
+     * principal termine naturalmente.
+     */
+    printf("\nBusqueda con break:\n");
 
     int valor = 1;
 
@@ -77,30 +113,38 @@ int main(void) {
         valor++;
     }
 
-    /* ===== CONTINUE EN WHILE ===== */
-    printf("\n=== Numeros impares con continue ===\n");
+    /*
+     * continue.
+     *
+     * Salta el resto del bloque y pasa a la siguiente repeticion.
+     */
+    printf("\nNumeros impares con continue:\n");
 
     int i = 1;
 
     while (i <= 15) {
         if (i % 2 == 0) {
             i++;
-            continue;  /* Salta los pares */
+            continue;
         }
+
         printf("%d ", i);
         i++;
     }
     printf("\n");
 
-    /* ===== CONDICIONES COMPUESTAS ===== */
-    printf("\n=== Juego de adivinanza (simulado) ===\n");
+    /*
+     * Adivinanza simulada.
+     *
+     * Este ejemplo combina while, if, break y un limite de intentos.
+     */
+    printf("\nJuego de adivinanza simulado:\n");
 
     int secreto = 7;
     int intento = 1;
     int maxIntentos = 3;
 
     while (intento <= maxIntentos) {
-        /* Simulamos un intento */
         int adivinanza = 3 + intento;
 
         if (adivinanza == secreto) {
@@ -108,7 +152,7 @@ int main(void) {
             break;
         }
 
-        printf("Intento %d: adivinaste %d (incorrecto)\n", intento, adivinanza);
+        printf("Intento %d: probaste %d\n", intento, adivinanza);
         intento++;
     }
 
