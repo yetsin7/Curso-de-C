@@ -1,6 +1,6 @@
 # Curso de C — De cero a PRO
 
-> Repositorio oficial: <https://github.com/yetsin7/curso-de-c>
+> Repositorio oficial: <https://github.com/yetsin7/Curso-de-C>
 
 ## Hola, Nicaragua
 
@@ -149,7 +149,7 @@ Desde los archivos dentro de cada capítulo la ruta relativa es:
 
 Este libro es un esfuerzo independiente y gratuito. Si te sirve, hay varias maneras de apoyarlo, todas gratis:
 
-- **Dale una estrella** al repositorio en GitHub: <https://github.com/yetsin7/curso-de-c>
+- **Dale una estrella** al repositorio en GitHub: <https://github.com/yetsin7/Curso-de-C>
 - **Compártelo** con amigos, compañeros de clase, profesores o cualquier persona que quiera aprender a programar.
 - **Abre un issue** si encuentras un error, un ejemplo poco claro o una mejora posible.
 - **Envía un pull request** con correcciones, mejoras de redacción, ejemplos extra o capítulos adicionales.

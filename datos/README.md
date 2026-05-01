@@ -9,7 +9,7 @@ C puede trabajar con él.
 La base utilizada por el proyecto es:
 
 ```text
-C:/Users/Yetsin/Documents/Programacion/curso-de-c/datos/biblia_rv60.sqlite3
+C:/Users/Yetsin/Documents/Programacion/Curso-de-C/datos/biblia_rv60.sqlite3
 ```
 
 Desde el capítulo `12-proyecto-biblia`, la ruta relativa es:
