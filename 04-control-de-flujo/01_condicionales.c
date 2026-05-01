@@ -1,43 +1,68 @@
 /*
- * Modulo 04 -- Condicionales
+ * ============================================================
+ * Modulo 04 -- Control de Flujo
  * Archivo: 01_condicionales.c
+ * ============================================================
  *
- * Demuestra las estructuras condicionales en C:
- *   - if / else if / else
- *   - switch / case / default
- *   - Condiciones anidadas
+ * Este archivo explica como tomar decisiones en C usando:
  *
- * Compilar: gcc -Wall -Wextra -std=c11 -o condicionales 01_condicionales.c
+ *   - if
+ *   - else if
+ *   - else
+ *   - switch
+ *
+ * Una condicion permite ejecutar una parte del codigo solo cuando
+ * una regla se cumple.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o condicionales 01_condicionales.c
+ *
+ * Ejecutar:
+ *   Windows: condicionales.exe
+ *   Linux/macOS: ./condicionales
  */
 
 #include <stdio.h>
 
 int main(void) {
-    /* ===== IF / ELSE IF / ELSE ===== */
-    printf("=== CONDICIONAL: Calificaciones ===\n");
+    printf("=== CONDICIONALES EN C ===\n\n");
 
+    /*
+     * Ejemplo 1: if, else if y else.
+     *
+     * El programa revisa la nota y muestra una calificacion.
+     */
     int nota = 75;
 
     if (nota >= 90) {
-        printf("Calificacion: A (Excelente)\n");
+        printf("Calificacion: A\n");
     } else if (nota >= 80) {
-        printf("Calificacion: B (Muy bien)\n");
+        printf("Calificacion: B\n");
     } else if (nota >= 70) {
-        printf("Calificacion: C (Bien)\n");
+        printf("Calificacion: C\n");
     } else if (nota >= 60) {
-        printf("Calificacion: D (Suficiente)\n");
+        printf("Calificacion: D\n");
     } else {
-        printf("Calificacion: F (Reprobado)\n");
+        printf("Calificacion: F\n");
     }
 
-    /* Condicional con operador ternario */
+    /*
+     * Ejemplo 2: operador ternario.
+     *
+     * Sirve para elegir entre dos valores de forma breve.
+     */
     int edad = 20;
     printf("Edad: %d -- %s\n", edad, (edad >= 18) ? "Mayor de edad" : "Menor de edad");
 
-    /* ===== SWITCH / CASE ===== */
-    printf("\n=== SWITCH: Dias de la semana ===\n");
+    /*
+     * Ejemplo 3: switch.
+     *
+     * switch es util cuando una variable puede tener varios valores
+     * concretos, como dias de la semana u opciones de menu.
+     */
+    printf("\n=== SWITCH: DIAS ===\n");
 
-    int dia = 3;  /* 1=Lunes, 2=Martes, etc. */
+    int dia = 3;
 
     switch (dia) {
         case 1:
@@ -57,41 +82,56 @@ int main(void) {
             break;
         case 6:
         case 7:
-            /* Fall-through: sabado y domingo comparten mensaje */
             printf("Fin de semana\n");
             break;
         default:
             printf("Dia invalido\n");
     }
 
-    /* Switch con caracteres */
-    printf("\n=== SWITCH: Calculadora basica ===\n");
+    /*
+     * Ejemplo 4: switch con operaciones.
+     */
+    printf("\n=== SWITCH: CALCULADORA ===\n");
 
     char operacion = '+';
-    int a = 8, b = 3;
+    int a = 8;
+    int b = 3;
 
     switch (operacion) {
-        case '+': printf("%d + %d = %d\n", a, b, a + b); break;
-        case '-': printf("%d - %d = %d\n", a, b, a - b); break;
-        case '*': printf("%d * %d = %d\n", a, b, a * b); break;
-        case '/': printf("%d / %d = %d\n", a, b, a / b); break;
-        default:  printf("Operacion desconocida: %c\n", operacion);
+        case '+':
+            printf("%d + %d = %d\n", a, b, a + b);
+            break;
+        case '-':
+            printf("%d - %d = %d\n", a, b, a - b);
+            break;
+        case '*':
+            printf("%d * %d = %d\n", a, b, a * b);
+            break;
+        case '/':
+            printf("%d / %d = %d\n", a, b, a / b);
+            break;
+        default:
+            printf("Operacion desconocida\n");
     }
 
-    /* ===== CONDICIONES ANIDADAS ===== */
-    printf("\n=== CONDICIONES ANIDADAS: Acceso ===\n");
+    /*
+     * Ejemplo 5: condiciones anidadas.
+     *
+     * Una condicion anidada es una condicion dentro de otra.
+     */
+    printf("\n=== CONDICIONES ANIDADAS ===\n");
 
-    int tieneCuenta = 1;  /* 1 = si, 0 = no */
+    int tieneCuenta = 1;
     int saldo = 50;
 
     if (tieneCuenta) {
         if (saldo >= 100) {
-            printf("Acceso completo: puedes comprar\n");
+            printf("Puedes comprar\n");
         } else {
-            printf("Saldo insuficiente. Necesitas al menos 100\n");
+            printf("Saldo insuficiente\n");
         }
     } else {
-        printf("Crea una cuenta para continuar\n");
+        printf("Debes crear una cuenta\n");
     }
 
     return 0;
