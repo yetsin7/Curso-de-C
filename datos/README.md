@@ -1,29 +1,21 @@
 # Datos — Base de datos de la Biblia
 
-Este directorio documenta la base de datos que usa el proyecto final del `Curso de C`. La idea no
-es solo saber que existe un archivo `.sqlite3`, sino entender qué representa y cómo un programa en
-C puede trabajar con él.
+Este directorio contiene la base de datos SQLite usada como proyecto avanzado en el curso.
 
 ## Archivo principal
 
-La base utilizada por el proyecto es:
-
 ```text
-C:/Users/Yetsin/Documents/Programacion/Curso-de-C/datos/biblia_rv60.sqlite3
+biblia_rv60.sqlite3
 ```
 
-Desde el capítulo `12-proyecto-biblia`, la ruta relativa es:
-
+Ruta relativa desde cualquier modulo del curso:
 ```text
 ../../datos/biblia_rv60.sqlite3
 ```
 
-## Qué contiene esta base de datos
+## Estructura de la base de datos
 
-La base almacena información estructurada de la Biblia Reina-Valera 1960. Lo normal es encontrar
-tablas para libros y versículos, donde cada registro representa una parte concreta del texto.
-
-Un esquema simplificado sería:
+La base almacena la Biblia Reina-Valera 1960 con las siguientes tablas:
 
 ```sql
 CREATE TABLE libros (
@@ -42,32 +34,53 @@ CREATE TABLE versiculos (
 );
 ```
 
-## Qué pasa cuando C consulta esta base
+## Como usar desde C
 
-Tu programa no lee el archivo como texto normal. En su lugar, usa la biblioteca SQLite para abrir
-el archivo, interpretar su formato interno y ejecutar consultas SQL. SQLite devuelve resultados que
-tu programa convierte en texto, números o estructuras propias.
+Para consultar esta base necesitas:
 
-En otras palabras:
+1. Instalar SQLite3 en tu sistema
+2. Incluir `<sqlite3.h>` en tu codigo
+3. Compilar enlazando la biblioteca: `gcc archivo.c -lsqlite3 -o programa`
 
-- El disco guarda el archivo
-- SQLite entiende la base
-- Tu programa en C pide datos y procesa respuestas
+Ejemplo basico de conexion:
 
-## recomendaciones para practicar
+```c
+sqlite3 *db;
+int rc = sqlite3_open("../../datos/biblia_rv60.sqlite3", &db);
+if (rc != SQLITE_OK) {
+    printf("Error: %s\n", sqlite3_errmsg(db));
+    return 1;
+}
+/* ... consultas ... */
+sqlite3_close(db);
+```
 
-- Primero abre la base y verifica que la conexión funcione
-- Consulta pocos registros antes de hacer búsquedas más complejas
-- Comprueba siempre los códigos de retorno y mensajes de error
-- No asumas que todas las consultas devolverán datos
+## Consultas utiles
 
-## Relación con el libro
+```sql
+-- Listar todos los libros
+SELECT nombre, abrev, testamento FROM libros ORDER BY id;
 
-Este recurso conecta especialmente con:
+-- Buscar versiculos por palabra clave
+SELECT v.texto, l.nombre, v.capitulo, v.versiculo
+FROM versiculos v JOIN libros l ON v.libro_id = l.id
+WHERE v.texto LIKE '%amor%' LIMIT 10;
 
-- `09-manejo-de-archivos`
-- `10-memoria-dinámica`
-- `12-proyecto-biblia`
+-- Contar versiculos por libro
+SELECT l.nombre, COUNT(*) as total
+FROM versiculos v JOIN libros l ON v.libro_id = l.id
+GROUP BY l.nombre ORDER BY total DESC;
+```
 
-Si todavía no te sientes cómodo con punteros, strings o validación de errores, conviene reforzar
-esos capítulos antes de profundizar en SQLite.
+## Modulos relacionados
+
+- `10-manejo-de-archivos` — Bases de lectura/escritura
+- `11-memoria-dinamica` — Gestion de resultados dinamicos
+- `14-proyecto-final-pro` — Proyecto integrador
+
+## Recomendaciones
+
+- Verifica siempre los codigos de retorno de SQLite
+- Usa sentencias preparadas (`sqlite3_prepare_v2`) para seguridad
+- Cierra la conexion con `sqlite3_close` al terminar
+- Finaliza statements con `sqlite3_finalize`
