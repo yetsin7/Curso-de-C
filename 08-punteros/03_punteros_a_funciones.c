@@ -1,34 +1,63 @@
 /*
- * Modulo 08 -- Punteros a funciones
- * Compilar: gcc -Wall -Wextra -std=c11 -o 03_funciones 03_punteros_a_funciones.c
+ * ============================================================
+ * Modulo 08 -- Punteros
+ * Archivo: 03_punteros_a_funciones.c
+ * ============================================================
  *
- * Demuestra:
- *   - Declaracion de puntero a funcion
- *   - Patron callback
- *   - Arreglo de punteros a funciones
- *   - Caso practico: selector de operaciones
+ * Este archivo explica los punteros a funciones.
+ *
+ * Un puntero a funcion guarda la direccion de una funcion, no la
+ * direccion de una variable normal.
+ *
+ * Esto permite elegir que funcion ejecutar durante la ejecucion del
+ * programa.
+ *
+ * Se usan en patrones como callbacks, tablas de operaciones, menus y
+ * sistemas donde una accion puede cambiar dinamicamente.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o 03_funciones 03_punteros_a_funciones.c
+ *
+ * Ejecutar:
+ *   Windows: 03_funciones.exe
+ *   Linux/macOS: ./03_funciones
  */
 
 #include <stdio.h>
 
-/* Operaciones aritmeticas basicas */
-int sumar(int a, int b) { return a + b; }
-int restar(int a, int b) { return a - b; }
-int multiplicar(int a, int b) { return a * b; }
+int sumar(int a, int b) {
+    return a + b;
+}
 
-/* Funcion que recibe un callback */
+int restar(int a, int b) {
+    return a - b;
+}
+
+int multiplicar(int a, int b) {
+    return a * b;
+}
+
+/*
+ * Esta funcion recibe otra funcion como parametro.
+ *
+ * operacion es un puntero a una funcion que recibe dos int y devuelve int.
+ */
 void ejecutarCallback(int a, int b, int (*operacion)(int, int), const char *nombre) {
     int resultado = operacion(a, b);
-    printf("  %s(%d, %d) = %d\n", nombre, a, b, resultado);
+    printf("%s(%d, %d) = %d\n", nombre, a, b, resultado);
 }
 
 int main(void) {
-    /* -----------------------------------------------
-     * 1. Declaracion de puntero a funcion
-     * ----------------------------------------------- */
     printf("=== PUNTERO A FUNCION ===\n");
 
-    /* int (*fn)(int, int) -- puntero a funcion que recibe dos int y devuelve int */
+    /*
+     * Declaracion:
+     *
+     * int (*fn)(int, int);
+     *
+     * Significa:
+     * fn es un puntero a una funcion que recibe dos int y devuelve int.
+     */
     int (*fn)(int, int);
 
     fn = sumar;
@@ -37,45 +66,49 @@ int main(void) {
     fn = multiplicar;
     printf("5 * 3 = %d\n", fn(5, 3));
 
-    /* -----------------------------------------------
-     * 2. Patron callback
-     * ----------------------------------------------- */
-    printf("\n=== PATRON CALLBACK ===\n");
+    printf("\n=== CALLBACK ===\n");
 
-    printf("Callbacks con diferentes operaciones:\n");
+    /*
+     * Un callback es una funcion que se pasa como argumento a otra funcion.
+     */
     ejecutarCallback(10, 4, sumar, "sumar");
     ejecutarCallback(10, 4, restar, "restar");
     ejecutarCallback(10, 4, multiplicar, "multiplicar");
 
-    /* -----------------------------------------------
-     * 3. Arreglo de punteros a funciones
-     * ----------------------------------------------- */
     printf("\n=== ARREGLO DE PUNTEROS A FUNCIONES ===\n");
 
-    /* Tabla de operaciones: cada indice es una operacion */
+    /*
+     * Este arreglo guarda varias funciones con la misma firma.
+     */
     int (*operaciones[])(int, int) = {sumar, restar, multiplicar};
     const char *nombres[] = {"Suma", "Resta", "Multiplicacion"};
     int totalOps = sizeof(operaciones) / sizeof(operaciones[0]);
 
-    int x = 8, y = 3;
+    int x = 8;
+    int y = 3;
+
     for (int i = 0; i < totalOps; i++) {
-        printf("  %s: %d\n", nombres[i], operaciones[i](x, y));
+        printf("%s: %d\n", nombres[i], operaciones[i](x, y));
     }
 
-    /* -----------------------------------------------
-     * 4. Caso practico: selector de operaciones
-     * ----------------------------------------------- */
     printf("\n=== SELECTOR DE OPERACIONES ===\n");
 
-    printf("Introduzca dos numeros y elija operacion (1=Suma, 2=Resta, 3=Multiplicacion)\n");
+    /*
+     * Simulamos una opcion elegida por el usuario.
+     *
+     * opcion 1 usa sumar.
+     * opcion 2 usa restar.
+     * opcion 3 usa multiplicar.
+     */
+    int num1 = 15;
+    int num2 = 6;
+    int opcion = 2;
 
-    int num1 = 15, num2 = 6;
-    int opcion = 2;  /* Simulamos entrada del usuario */
-
-    printf("Numeros: %d y %d, Opcion: %d\n", num1, num2, opcion);
+    printf("Numeros: %d y %d, opcion: %d\n", num1, num2, opcion);
 
     if (opcion >= 1 && opcion <= totalOps) {
         int resultado = operaciones[opcion - 1](num1, num2);
+
         printf("Resultado: %s(%d, %d) = %d\n",
                nombres[opcion - 1], num1, num2, resultado);
     } else {
