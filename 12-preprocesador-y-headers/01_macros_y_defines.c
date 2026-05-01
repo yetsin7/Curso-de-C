@@ -1,32 +1,61 @@
 /*
- * 01_macros_y_defines.c -- Macros y defines en el preprocesador
- * Compilar: gcc -Wall -Wextra -std=c11 -o 01_macros 01_macros_y_defines.c
+ * ============================================================
+ * Modulo 12 -- Preprocesador y Headers
+ * Archivo: 01_macros_y_defines.c
+ * ============================================================
  *
- * Demuestra el uso de #define para constantes y macros funcionales,
- * la importancia de los parentesis y las macros predefinidas del compilador.
+ * Este archivo explica macros y constantes con #define.
+ *
+ * El preprocesador trabaja antes que el compilador. Una de sus tareas es
+ * reemplazar texto. Por ejemplo, si defines PI como 3.14159, el
+ * preprocesador reemplaza PI por ese valor antes de compilar.
+ *
+ * Las macros pueden ser utiles, pero deben escribirse con cuidado porque
+ * no funcionan igual que una funcion normal.
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o 01_macros 01_macros_y_defines.c
+ *
+ * Ejecutar:
+ *   Windows: 01_macros.exe
+ *   Linux/macOS: ./01_macros
  */
 
 #include <stdio.h>
 
-/* Constantes con #define -- sustitucion textual antes de compilar */
+/*
+ * Constantes con #define.
+ *
+ * Esto no crea variables. Es sustitucion textual antes de compilar.
+ */
 #define PI        3.14159265358979
 #define MAX_ITEMS 50
 #define AUTOR     "Curso de C"
 
-/* Macro funcional: los parentesis protegen contra errores de precedencia */
+/*
+ * Macros funcionales.
+ *
+ * Los parentesis son fundamentales para evitar errores de precedencia.
+ */
 #define SQUARE(x)   ((x) * (x))
 #define ABSOLUTO(n) ((n) < 0 ? -(n) : (n))
 
-/* Macro multilinea con do-while para comportarse como una sola instruccion */
+/*
+ * Macro multilinea.
+ *
+ * El patron do-while(0) hace que la macro se comporte como una sola
+ * instruccion cuando se usa en un if, while u otro bloque.
+ */
 #define SALUDAR(nombre) \
     do { \
         printf("Hola, %s!\n", (nombre)); \
     } while (0)
 
-/* Demonstrar como #undef elimina una macro */
-#define TEMPoral 42
-#undef TEMPoral
-/* Si intentaramos usar TEMPoral aqui, el compilador daria error */
+/*
+ * #undef elimina una macro definida previamente.
+ */
+#define TEMPORAL 42
+#undef TEMPORAL
 
 int main(void) {
     printf("=== CONSTANTES CON #define ===\n");
@@ -36,8 +65,7 @@ int main(void) {
 
     printf("\n=== MACROS FUNCIONALES ===\n");
     printf("SQUARE(5)   = %d\n", SQUARE(5));
-    printf("SQUARE(2+3) = %d (correcto: 25)\n", SQUARE(2+3));
-
+    printf("SQUARE(2+3) = %d\n", SQUARE(2 + 3));
     printf("ABSOLUTO(-7) = %d\n", ABSOLUTO(-7));
     printf("ABSOLUTO(7)  = %d\n", ABSOLUTO(7));
 
@@ -45,9 +73,8 @@ int main(void) {
     SALUDAR("Programador");
 
     printf("\n=== IMPORTANCIA DE LOS PARENTESIS ===\n");
-    /* Sin parentesis: SQUARE(2+3) seria 2+3*2+3 = 11 (MAL) */
-    /* Con parentesis: ((2+3)*(2+3)) = 25 (CORRECTO) */
-    printf("Gracias a los parentesis: SQUARE(2+3) = %d\n", SQUARE(2+3));
+    printf("Sin parentesis, una macro puede producir resultados inesperados.\n");
+    printf("Con parentesis: SQUARE(2+3) = %d\n", SQUARE(2 + 3));
 
     printf("\n=== MACROS PREDEFINIDAS ===\n");
     printf("Archivo: %s\n", __FILE__);
@@ -55,9 +82,9 @@ int main(void) {
     printf("Fecha:   %s\n", __DATE__);
     printf("Hora:    %s\n", __TIME__);
 
-    printf("\n=== #undef DEMOSTRACION ===\n");
-    printf("La macro TEMPoral fue eliminada con #undef\n");
-    printf("Ya no se puede usar en este archivo.\n");
+    printf("\n=== #undef ===\n");
+    printf("La macro TEMPORAL fue eliminada con #undef.\n");
+    printf("Despues de eliminarla, ya no se puede usar.\n");
 
     return 0;
 }
