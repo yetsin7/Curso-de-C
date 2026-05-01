@@ -1,16 +1,38 @@
 /*
- * Modulo 04 -- Menu Interactivo
+ * ============================================================
+ * Modulo 04 -- Control de Flujo
  * Archivo: 04_menu_interactivo.c
+ * ============================================================
  *
- * Proyecto practico: sistema de menu interactivo.
- * Combina switch, do-while, if/else y bucles for.
+ * Este archivo muestra un proyecto practico: un menu interactivo.
  *
- * Compilar: gcc -Wall -Wextra -std=c11 -o menu_interactivo 04_menu_interactivo.c
+ * Un menu interactivo permite que el usuario elija una opcion y que
+ * el programa responda segun esa opcion.
+ *
+ * Este programa combina:
+ *
+ *   - funciones
+ *   - scanf para leer datos
+ *   - do-while para repetir el menu
+ *   - switch para elegir la opcion
+ *   - if para validar casos especiales
+ *   - for para repetir calculos
+ *
+ * Compilar:
+ *   gcc -Wall -Wextra -std=c11 -o menu_interactivo 04_menu_interactivo.c
+ *
+ * Ejecutar:
+ *   Windows: menu_interactivo.exe
+ *   Linux/macOS: ./menu_interactivo
  */
 
 #include <stdio.h>
 
-/* Muestra las opciones del menu principal */
+/*
+ * Esta funcion imprime las opciones disponibles.
+ *
+ * No devuelve ningun valor porque su trabajo solo es mostrar texto.
+ */
 void mostrarMenu(void) {
     printf("\n===== MENU PRINCIPAL =====\n");
     printf("1. Contar hasta N\n");
@@ -22,9 +44,13 @@ void mostrarMenu(void) {
     printf("Elige una opcion: ");
 }
 
-/* Opcion 1: Cuenta del 1 al N */
+/*
+ * Opcion 1:
+ * Lee un numero y cuenta desde 1 hasta ese numero.
+ */
 void contarHastaN(void) {
     int n;
+
     printf("Ingresa un numero: ");
     scanf("%d", &n);
 
@@ -35,9 +61,16 @@ void contarHastaN(void) {
     printf("\n");
 }
 
-/* Opcion 2: Calcula el factorial de N */
+/*
+ * Opcion 2:
+ * Calcula el factorial de un numero.
+ *
+ * El factorial de 5 es:
+ *   5 * 4 * 3 * 2 * 1 = 120
+ */
 void calcularFactorial(void) {
     int n;
+
     printf("Ingresa un numero positivo: ");
     scanf("%d", &n);
 
@@ -47,6 +80,7 @@ void calcularFactorial(void) {
     }
 
     long resultado = 1;
+
     for (int i = 2; i <= n; i++) {
         resultado *= i;
     }
@@ -54,21 +88,31 @@ void calcularFactorial(void) {
     printf("Factorial de %d = %ld\n", n, resultado);
 }
 
-/* Opcion 3: Muestra la tabla de multiplicar */
+/*
+ * Opcion 3:
+ * Muestra la tabla de multiplicar de un numero.
+ */
 void verTablaMultiplicar(void) {
     int n;
+
     printf("Ingresa un numero: ");
     scanf("%d", &n);
 
     printf("Tabla del %d:\n", n);
     for (int i = 1; i <= 10; i++) {
-        printf("  %d x %2d = %2d\n", n, i, n * i);
+        printf("%d x %2d = %2d\n", n, i, n * i);
     }
 }
 
-/* Opcion 4: Verifica si un numero es primo */
+/*
+ * Opcion 4:
+ * Verifica si un numero es primo.
+ *
+ * Un numero primo solo se puede dividir exactamente entre 1 y el mismo.
+ */
 void verificarPrimo(void) {
     int n;
+
     printf("Ingresa un numero: ");
     scanf("%d", &n);
 
@@ -78,6 +122,7 @@ void verificarPrimo(void) {
     }
 
     int esPrimo = 1;
+
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {
             esPrimo = 0;
@@ -97,7 +142,11 @@ int main(void) {
 
     printf("Bienvenido al programa de Control de Flujo\n");
 
-    /* El do-while garantiza que el menu se muestra al menos una vez */
+    /*
+     * do-while garantiza que el menu se muestre al menos una vez.
+     *
+     * El menu se repite hasta que el usuario elige la opcion 5.
+     */
     do {
         mostrarMenu();
         scanf("%d", &opcion);
