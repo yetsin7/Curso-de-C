@@ -127,7 +127,7 @@ int sumar(int a, int b) {
  * Retorna: nada (void)
  */
 void saludar(const char *nombre) {
-    printf("Hola, %s! Bienvenido al Libro de C.\n", nombre);
+    printf("Hola, %s! Bienvenido al Curso de C.\n", nombre);
 }
 
 /*

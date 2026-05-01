@@ -101,7 +101,7 @@ int main(void) {
     char nombre[] = "Estudiante";
 
     /* %s imprime una cadena de texto */
-    printf("Hola, %s! Bienvenido al Libro de C.\n", nombre);
+    printf("Hola, %s! Bienvenido al Curso de C.\n", nombre);
 
     /* El programa retorna 0 para indicar que termino sin errores */
     return 0;

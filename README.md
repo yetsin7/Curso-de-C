@@ -1,4 +1,4 @@
-# Libro de C — De cero a PRO
+# Curso de C — De cero a PRO
 
 > Repositorio oficial: <https://github.com/yetsin7/curso-de-c>
 

@@ -61,7 +61,7 @@ int main(void) {
     char destino[50];
 
     /* strcpy copia src en dest (incluyendo '\0') */
-    strcpy(destino, "Libro de C");
+    strcpy(destino, "Curso de C");
     printf("strcpy: \"%s\"\n", destino);
 
     /* strncpy es más seguro: copia máximo n caracteres */

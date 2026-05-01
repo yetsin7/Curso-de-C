@@ -1,6 +1,6 @@
 # Datos — Base de datos de la Biblia
 
-Este directorio documenta la base de datos que usa el proyecto final del `Libro de C`. La idea no
+Este directorio documenta la base de datos que usa el proyecto final del `Curso de C`. La idea no
 es solo saber que existe un archivo `.sqlite3`, sino entender qué representa y cómo un programa en
 C puede trabajar con él.
 
